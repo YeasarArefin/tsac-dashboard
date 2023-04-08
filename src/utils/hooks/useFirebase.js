@@ -15,6 +15,7 @@ firebaseInit();
 
 const useFirebase = () => {
     const [user, setUser] = useState({});
+    console.log('🚀 ~ file: useFirebase.js:18 ~ useFirebase ~ user:', user);
     const [firebaseError, setFirebaseError] = useState('');
     const [isLoading, setisLoading] = useState(true);
     const [userInfo, setUserInfo] = useState({});
@@ -22,7 +23,7 @@ const useFirebase = () => {
 
     const getUserInfo = async (currentUser, navigate) => {
         const { data } = await axios.get(
-            `http://localhost:5000/api/v1/accounts?email=${currentUser?.email}`
+            `https://tsac.onrender.com/api/v1/accounts?email=${currentUser?.email}`
         );
         setUserInfo(data?.[0]);
         setisLoading(false);
@@ -40,22 +41,24 @@ const useFirebase = () => {
         createUserWithEmailAndPassword(auth, email, password)
             .then(({ user }) => {
                 if (user) {
-                    axios.post('http://localhost:5000/api/v1/accounts', userInfo).then((res) => {
-                        if (res.status === 200) {
-                            setUser(user);
-                            getUserInfo(user);
-                            toast.success('Account Created Successfully', {
-                                position: 'bottom-right',
-                                autoClose: 5000,
-                                hideProgressBar: false,
-                                closeOnClick: true,
-                                pauseOnHover: true,
-                                draggable: true,
-                                progress: undefined,
-                                theme: 'light',
-                            });
-                        }
-                    });
+                    axios
+                        .post('https://tsac.onrender.com/api/v1/accounts', userInfo)
+                        .then((res) => {
+                            if (res.status === 200) {
+                                setUser(user);
+                                getUserInfo(user);
+                                toast.success('Account Created Successfully', {
+                                    position: 'bottom-right',
+                                    autoClose: 5000,
+                                    hideProgressBar: false,
+                                    closeOnClick: true,
+                                    pauseOnHover: true,
+                                    draggable: true,
+                                    progress: undefined,
+                                    theme: 'light',
+                                });
+                            }
+                        });
                 }
             })
             .catch((error) => {
@@ -102,6 +105,7 @@ const useFirebase = () => {
                 getUserInfo(user);
             } else {
                 setUser({});
+                setisLoading(false);
             }
         });
 

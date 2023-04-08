@@ -33,7 +33,7 @@ const App = () => {
                 {
                     path: 'teachers',
                     element: (
-                        <RolebasedAuth allowedRoles={(admin, teacher)}>
+                        <RolebasedAuth allowedRoles={[admin, teacher]}>
                             <TeachersList />
                         </RolebasedAuth>
                     ),

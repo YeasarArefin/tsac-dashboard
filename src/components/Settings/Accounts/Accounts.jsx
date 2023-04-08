@@ -10,12 +10,15 @@ import {
     RadioGroup,
     Select,
 } from '@mui/material';
+import axios from 'axios';
 import { useFormik } from 'formik';
 import React, { useRef, useState } from 'react';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { HiOutlineLockClosed, HiOutlineMail, HiOutlinePhone, HiOutlineUser } from 'react-icons/hi';
 import { MdOutlineAdminPanelSettings } from 'react-icons/md';
 import { VscEye, VscEyeClosed } from 'react-icons/vsc';
-import { ToastContainer } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AccountSchema from '../../../utils/ValidationSchemas/Accounts.schema';
 import useAuth from '../../../utils/hooks/useAuth';
@@ -29,7 +32,10 @@ const Accounts = () => {
     const [eyeIsClosed, setEyeIsColosed] = useState(true);
     const [studentStandard, setStudentStandard] = useState('');
     const [teacherStandard, setTeacherStandard] = useState([]);
+    const [saveLoading, setSaveLoading] = useState(false);
     const [role, setRole] = useState('');
+    const navigate = useNavigate();
+
     const [initialValues, setInitialValues] = useState({
         name: '',
         phone: '',
@@ -45,8 +51,24 @@ const Accounts = () => {
             validationSchema: AccountSchema,
 
             onSubmit: (value, action) => {
-                createAccount(values.email, values.password, values);
-                action.resetForm();
+                // createAccount(values.email, values.password, values, navigate);
+                setSaveLoading(true);
+                axios.post('http://localhost:5000/api/v1/createaccount', value).then((res) => {
+                    if (res.status === 200) {
+                        toast.success('Account Created Successfully', {
+                            position: 'bottom-right',
+                            autoClose: 5000,
+                            hideProgressBar: false,
+                            closeOnClick: true,
+                            pauseOnHover: true,
+                            draggable: true,
+                            progress: undefined,
+                            theme: 'light',
+                        });
+                        action.resetForm();
+                        setSaveLoading(false);
+                    }
+                });
             },
         });
 
@@ -124,7 +146,7 @@ const Accounts = () => {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 className={inputStyle}
-                                type="number"
+                                type="text"
                                 placeholder="Phone"
                             />
                             {errors.phone && touched.phone && (
@@ -344,23 +366,33 @@ const Accounts = () => {
                         </div>
                     </div>
 
-                    <div>
-                        {firebaseError === 'Firebase: Error (auth/email-already-in-use).' &&
-                            (<div className="text-red-600 pb-3">
-                                * This email is already registered
-                            </div>)(
-                                firebaseError !==
-                                    'Firebase: Error (auth/email-already-in-use).' && (
-                                    <h1 className="text-red-600 pb-3">* {firebaseError}</h1>
-                                )
-                            )}
+                    {!saveLoading ? (
+                        <div>
+                            {firebaseError === 'Firebase: Error (auth/email-already-in-use).' &&
+                                (<div className="text-red-600 pb-3">
+                                    * This email is already registered
+                                </div>)(
+                                    firebaseError !==
+                                        'Firebase: Error (auth/email-already-in-use).' && (
+                                        <h1 className="text-red-600 pb-3">* {firebaseError}</h1>
+                                    )
+                                )}
+                            <button
+                                type="submit"
+                                className="p-2 w-full border bg-blue-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+                            >
+                                Create Account
+                            </button>
+                        </div>
+                    ) : (
                         <button
+                            disabled
                             type="submit"
-                            className="p-2 w-full border bg-blue-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+                            className="p-2 w-full border bg-blue-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300 flex justify-center cursor-not-allowed opacity-50"
                         >
-                            Create Account
+                            <AiOutlineLoading3Quarters className="text-2xl animate-spin" />
                         </button>
-                    </div>
+                    )}
                 </div>
             </form>
         </div>
