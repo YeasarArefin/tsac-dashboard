@@ -10,7 +10,9 @@ import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import PropTypes from 'prop-types';
 import * as React from 'react';
-import { Ri4KFill, RiDashboardLine, RiSettings5Line } from 'react-icons/ri';
+import { FaChalkboardTeacher } from 'react-icons/fa';
+import { HiOutlineUserGroup } from 'react-icons/hi';
+import { RiDashboardLine, RiSettings5Line } from 'react-icons/ri';
 import { NavLink, Outlet } from 'react-router-dom';
 import useAuth from '../../utils/hooks/useAuth';
 import Dropdown from '../UI/Dropdown';
@@ -20,7 +22,6 @@ const drawerWidth = 240;
 function Shell(props) {
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
-    // const [menu, setMenu] = React.useState(false);
     const { user, userInfo } = useAuth();
 
     const handleDrawerToggle = () => {
@@ -73,8 +74,13 @@ function Shell(props) {
         },
         {
             name: 'teachers',
-            icon: <Ri4KFill />,
+            icon: <FaChalkboardTeacher />,
             path: '/teachers',
+        },
+        {
+            name: 'students',
+            icon: <HiOutlineUserGroup />,
+            path: '/students',
         },
         {
             name: 'settings',

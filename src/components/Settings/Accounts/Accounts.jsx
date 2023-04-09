@@ -31,7 +31,6 @@ const Accounts = () => {
     const passwordRef = useRef('');
     const [eyeIsClosed, setEyeIsColosed] = useState(true);
     const [studentStandard, setStudentStandard] = useState('');
-    const [teacherStandard, setTeacherStandard] = useState([]);
     const [saveLoading, setSaveLoading] = useState(false);
     const [role, setRole] = useState('');
     const navigate = useNavigate();
@@ -51,9 +50,8 @@ const Accounts = () => {
             validationSchema: AccountSchema,
 
             onSubmit: (value, action) => {
-                // createAccount(values.email, values.password, values, navigate);
                 setSaveLoading(true);
-                axios.post('http://localhost:5000/api/v1/createaccount', value).then((res) => {
+                axios.post('https://tsac.onrender.com/api/v1/createaccount', value).then((res) => {
                     if (res.status === 200) {
                         toast.success('Account Created Successfully', {
                             position: 'bottom-right',
@@ -67,6 +65,7 @@ const Accounts = () => {
                         });
                         action.resetForm();
                         setSaveLoading(false);
+                        setStudentStandard('');
                     }
                 });
             },
@@ -85,12 +84,6 @@ const Accounts = () => {
         );
         setInitialValues(newInitValue);
         setStudentStandard(e.target.value);
-    };
-
-    const handleTeacherStanderdChange = () => {
-        const newInitValue = { ...initialValues };
-        setInitialValues(newInitValue);
-        console.log(newInitValue);
     };
 
     const handleChangeRole = (e) => {
@@ -233,8 +226,8 @@ const Accounts = () => {
                                             labelId="demo-select-small"
                                             id="demo-select-small"
                                             value={studentStandard}
-                                            label="Standard"
                                             onChange={handleStudentStandardChange}
+                                            label="Standard"
                                             sx={{ width: 1 }}
                                         >
                                             <MenuItem value="HSC-1st">HSC-1st</MenuItem>

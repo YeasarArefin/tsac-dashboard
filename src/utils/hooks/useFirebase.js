@@ -15,7 +15,6 @@ firebaseInit();
 
 const useFirebase = () => {
     const [user, setUser] = useState({});
-    console.log('🚀 ~ file: useFirebase.js:18 ~ useFirebase ~ user:', user);
     const [firebaseError, setFirebaseError] = useState('');
     const [isLoading, setisLoading] = useState(true);
     const [userInfo, setUserInfo] = useState({});

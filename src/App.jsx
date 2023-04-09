@@ -5,6 +5,7 @@ import Four0One from './pages/401';
 import Four0Four from './pages/404';
 import Settings from './pages/Settings/Settings';
 import Signin from './pages/Signin/Signin';
+import StudentsList from './pages/Students/StudentsList';
 import TeachersList from './pages/Teachers/TeachersList';
 import AuthProvider from './utils/context/AuthProvider';
 import RequireAuth from './utils/private/RequireAuth';
@@ -37,7 +38,18 @@ const App = () => {
                             <TeachersList />
                         </RolebasedAuth>
                     ),
-                    loader: async () => fetch('https://jsonplaceholder.typicode.com/users'),
+                    loader: async () =>
+                        fetch('https://tsac.onrender.com/api/v1/accounts?role=teacher'),
+                },
+                {
+                    path: 'students',
+                    element: (
+                        <RolebasedAuth allowedRoles={[admin, teacher]}>
+                            <StudentsList />
+                        </RolebasedAuth>
+                    ),
+                    loader: async () =>
+                        fetch('https://tsac.onrender.com/api/v1/accounts?role=student'),
                 },
                 {
                     path: 'settings',

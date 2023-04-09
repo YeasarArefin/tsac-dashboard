@@ -30,6 +30,12 @@ const userCol = [
         headerName: 'phone',
         width: 250,
     },
+    // {
+    //     field: 'address',
+    //     headerName: 'address',
+    //     width: 200,
+    //     valueGetter: (params) => `${params.row.address.street}`,
+    // },
     {
         field: 'action',
         headerName: 'action',
@@ -51,7 +57,7 @@ const userCol = [
     },
 ];
 
-export default function TeachersList() {
+export default function StudentsList() {
     const users = useLoaderData();
     const [displayUsers, setDisplayUsers] = React.useState(users);
 
