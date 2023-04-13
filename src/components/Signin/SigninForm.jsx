@@ -1,6 +1,8 @@
+/* eslint-disable react/button-has-type */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useFormik } from 'formik';
 import React, { useState } from 'react';
+import { AiOutlineLoading3Quarters } from 'react-icons/ai';
 import { HiOutlineLockClosed, HiOutlineMail } from 'react-icons/hi';
 import { MdOutlineAdminPanelSettings } from 'react-icons/md';
 import { VscEye, VscEyeClosed } from 'react-icons/vsc';
@@ -12,6 +14,7 @@ const SigninForm = () => {
     const [eyeIsClosed, setEyeIsColosed] = useState(true);
     const { signinAccount, firebaseError, setFirebaseError } = useAuth();
     const [inputHighlight, setInputHighlight] = useState(false);
+    const [loginLoading, setLoginLoading] = useState(false);
     const navigate = useNavigate();
     const { values, handleChange, handleBlur, handleSubmit, errors, touched } = useFormik({
         initialValues: {
@@ -20,6 +23,7 @@ const SigninForm = () => {
         },
         validationSchema: SigninSchema,
         onSubmit: (value) => {
+            setLoginLoading(true);
             signinAccount(value.email.toLowerCase(), value.password, navigate);
         },
     });
@@ -96,12 +100,22 @@ const SigninForm = () => {
             </div>
             <div>
                 {firebaseError && <h1 className="pb-3 pl-2 text-red-600">* {firebaseError}</h1>}
-                <button
-                    type="submit"
-                    className="p-2 w-full border bg-blue-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
-                >
-                    Signin
-                </button>
+
+                {!loginLoading ? (
+                    <button
+                        type="submit"
+                        className="p-2 w-full border bg-blue-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+                    >
+                        Signin
+                    </button>
+                ) : (
+                    <button
+                        disabled
+                        className="p-2 opacity-50 w-full border flex justify-center bg-blue-600 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+                    >
+                        <AiOutlineLoading3Quarters className="text-2xl animate-spin" />
+                    </button>
+                )}
             </div>
         </form>
     );

@@ -13,6 +13,7 @@ import * as React from 'react';
 import { FaChalkboardTeacher } from 'react-icons/fa';
 import { HiOutlineUserGroup } from 'react-icons/hi';
 import { RiDashboardLine, RiSettings5Line } from 'react-icons/ri';
+import { TbFileInvoice } from 'react-icons/tb';
 import { NavLink, Outlet } from 'react-router-dom';
 import useAuth from '../../utils/hooks/useAuth';
 import Dropdown from '../UI/Dropdown';
@@ -83,6 +84,11 @@ function Shell(props) {
             path: '/students',
         },
         {
+            name: 'invoice',
+            icon: <TbFileInvoice />,
+            path: '/invoice',
+        },
+        {
             name: 'settings',
             icon: <RiSettings5Line />,
             path: '/settings',
@@ -107,7 +113,10 @@ function Shell(props) {
                               >
                                   <ListItemButton className="flex gap-x-4 rounded-lg">
                                       <div className="text-xl">{icon}</div>
-                                      <ListItemText primary={name} />
+                                      <ListItemText
+                                          primary={name}
+                                          className="capitalize font-bold"
+                                      />
                                   </ListItemButton>
                               </NavLink>
                           );
@@ -132,7 +141,7 @@ function Shell(props) {
                 }}
                 className="bg-white shadow-lg"
             >
-                <Toolbar className="justify-between lg:justify-end">
+                <Toolbar className="justify-between sm:justify-end">
                     <IconButton
                         color="inherit"
                         aria-label="open drawer"
@@ -142,13 +151,16 @@ function Shell(props) {
                     >
                         <MenuIcon className="text-blue-600" />
                     </IconButton>
-                    <div className="flex items-center justify-end text-blue-600 gap-x-3">
+                    <div className="flex items-center font-semibold justify-end text-blue-600 gap-x-3">
                         {userInfo?.role ? (
-                            <h1>
-                                {userInfo.role} : {user.email}
-                            </h1>
+                            <div className="flex gap-x-2">
+                                <h1 className="capitalize">{userInfo.role}</h1> :
+                                <h1 className="w-[60px] sm:w-full overflow-hidden text-ellipsis">
+                                    {user.email}
+                                </h1>
+                            </div>
                         ) : (
-                            <div className="h-2  w-[270px] bg-blue-300 rounded-full" />
+                            <div className="h-2 w-[270px] bg-blue-300 rounded-full" />
                         )}
 
                         <Dropdown />

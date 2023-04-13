@@ -7,6 +7,7 @@ import Settings from './pages/Settings/Settings';
 import Signin from './pages/Signin/Signin';
 import StudentsList from './pages/Students/StudentsList';
 import TeachersList from './pages/Teachers/TeachersList';
+import Invoice from './pages/invoice/Invoice';
 import AuthProvider from './utils/context/AuthProvider';
 import RequireAuth from './utils/private/RequireAuth';
 import RolebasedAuth from './utils/private/RolebasedAuth';
@@ -46,6 +47,16 @@ const App = () => {
                     element: (
                         <RolebasedAuth allowedRoles={[admin, teacher]}>
                             <StudentsList />
+                        </RolebasedAuth>
+                    ),
+                    loader: async () =>
+                        fetch('https://tsac.onrender.com/api/v1/accounts?role=student'),
+                },
+                {
+                    path: 'invoice',
+                    element: (
+                        <RolebasedAuth allowedRoles={[admin]}>
+                            <Invoice />
                         </RolebasedAuth>
                     ),
                     loader: async () =>

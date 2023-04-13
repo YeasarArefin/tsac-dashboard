@@ -74,7 +74,7 @@ export default function StudentsList() {
         <div className="box">
             <div className="flex flex-col gap-y-5">
                 <div>
-                    <h1 className="text-2xl">Teachers</h1>
+                    <h1 className="text-2xl">Students</h1>
                 </div>
 
                 <div className="flex gap-x-5 mb-10">
