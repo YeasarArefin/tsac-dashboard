@@ -108,7 +108,7 @@ function Shell(props) {
                                   key={path}
                                   to={path}
                                   className={({ isActive }) =>
-                                      isActive && 'bg-blue-600 text-white rounded-lg'
+                                      isActive ? 'bg-blue-600 text-white rounded-lg' : ''
                                   }
                               >
                                   <ListItemButton className="flex gap-x-4 rounded-lg">

@@ -1,10 +1,9 @@
 import React from 'react';
-import InvoiceLayout from '../../components/Invoice/InvoiceLayout';
 
 const Invoice = () => {
     return (
         <div>
-            <InvoiceLayout />
+            <h1>invoice</h1>
         </div>
     );
 };
