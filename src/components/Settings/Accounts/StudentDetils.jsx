@@ -1,7 +1,8 @@
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import React from 'react';
+import TakaSign from '../../UI/TakaSign';
 
-const StudentDetils = ({
+const StudentDetails = ({
     role,
     studentStandard,
     handleStudentStandardChange,
@@ -13,7 +14,7 @@ const StudentDetils = ({
     setFieldValue,
 }) => {
     const selectedStudentSubject = subjects[values.standard[0]]?.map(({ name, fee }) => (
-        <div className="flex items-center gap-x-2">
+        <div key={name} className="flex items-center gap-x-2">
             <input
                 className="form-checkbox h-4 w-4"
                 type="checkbox"
@@ -33,7 +34,7 @@ const StudentDetils = ({
                 }}
             />
             <span className="capitalize">
-                {name} - {fee}&#2547;
+                {name} - {fee} <TakaSign />
             </span>
         </div>
     ));
@@ -72,4 +73,4 @@ const StudentDetils = ({
     );
 };
 
-export default StudentDetils;
+export default StudentDetails;

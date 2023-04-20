@@ -1,13 +1,14 @@
+import { createTheme, ThemeProvider } from '@mui/material';
 import React from 'react';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Shell from './components/Shell/Shell';
 import Four0One from './pages/401';
 import Four0Four from './pages/404';
+import Invoice from './pages/invoice/index.jsx';
 import Settings from './pages/Settings/Settings';
 import Signin from './pages/Signin/Signin';
 import StudentsList from './pages/Students/StudentsList';
 import TeachersList from './pages/Teachers/TeachersList';
-import Invoice from './pages/invoice/Invoice';
 import AuthProvider from './utils/context/AuthProvider';
 import RequireAuth from './utils/private/RequireAuth';
 import RolebasedAuth from './utils/private/RolebasedAuth';
@@ -85,10 +86,18 @@ const App = () => {
             element: <Four0Four />,
         },
     ]);
+
+    const theme = createTheme({
+        typography: {
+            fontFamily: ['Mulish'].join(','),
+        },
+    });
     return (
         <div>
             <AuthProvider>
-                <RouterProvider router={router} />;
+                <ThemeProvider theme={theme}>
+                    <RouterProvider router={router} />;
+                </ThemeProvider>
             </AuthProvider>
         </div>
     );

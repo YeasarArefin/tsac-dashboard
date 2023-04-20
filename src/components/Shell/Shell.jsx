@@ -121,8 +121,11 @@ function Shell(props) {
                               </NavLink>
                           );
                       })
-                    : [...Array(5).keys()].map((item) => (
-                          <div className="bg-blue-100 h-12 mb-5 rounded-lg animate-pulse" />
+                    : [...Array(5).keys()].map((item, index) => (
+                          <div
+                              key={item}
+                              className="bg-blue-100 h-12 mb-5 rounded-lg animate-pulse"
+                          />
                       ))}
             </List>
         </div>

@@ -29,3 +29,7 @@
 .box {
   @apply bg-white shadow-xl p-6 rounded-xl border
 }
+
+.MuiTableCell-root {
+  @apply text-white
+}

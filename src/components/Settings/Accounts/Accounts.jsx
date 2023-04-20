@@ -13,7 +13,7 @@ import useAuth from '../../../utils/hooks/useAuth';
 import CreateButton from './CreateButton';
 import InputFields from './InputFields';
 import SelectRole from './SelectRole';
-import StudentDetils from './StudentDetils';
+import StudentDetails from './StudentDetils';
 import TeacherDetails from './TeacherDetails';
 
 const Accounts = () => {
@@ -28,15 +28,7 @@ const Accounts = () => {
     const [saveLoading, setSaveLoading] = useState(false);
     const [role, setRole] = useState('');
     const standards = ['HSC', 'SSC', '8'];
-    // const subjects = {
-    //     HSC_2nd: ['physics', 'chemistry', 'higher math', 'biology', 'ict', 'english'],
 
-    //     HSC_1st: ['physics', 'chemistry', 'higher math', 'biology', 'ict', 'english'],
-
-    //     SSC: ['physics', 'chemistry', 'higher math', 'general math', 'biology', 'english'],
-
-    //     8: ['general math', 'science', 'biology', 'english'],
-    // };
     const subjects = {
         HSC: [
             {
@@ -204,7 +196,7 @@ const Accounts = () => {
 
                         <div>
                             {/* select students type and data */}
-                            <StudentDetils
+                            <StudentDetails
                                 role={role}
                                 standards={standards}
                                 setFieldValue={setFieldValue}
