@@ -96,7 +96,7 @@ const App = () => {
         <div>
             <AuthProvider>
                 <ThemeProvider theme={theme}>
-                    <RouterProvider router={router} />;
+                    <RouterProvider router={router} />
                 </ThemeProvider>
             </AuthProvider>
         </div>

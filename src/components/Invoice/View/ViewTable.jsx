@@ -49,7 +49,8 @@ const ViewTable = ({ tableItems, vat, discount }) => {
                             {' '}
                         </TableCell>
                         <TableCell className="capitalize text-base" align="center">
-                            <span className="font-bold">Subtotal :</span> {subTotal} <TakaSign />
+                            <span className="font-semibold">Subtotal : </span>
+                            <span className="font-bold">{subTotal}</span> <TakaSign />
                         </TableCell>
                     </TableRow>
                     <TableRow>
@@ -57,8 +58,8 @@ const ViewTable = ({ tableItems, vat, discount }) => {
                             {' '}
                         </TableCell>
                         <TableCell className="capitalize text-base" align="center">
-                            <span className="font-bold">With {vat}% Vat : </span>
-                            {vatTotal} <TakaSign />
+                            <span className="font-semibold">With {vat}% Vat : </span>
+                            <span className="font-bold">{vatTotal}</span> <TakaSign />
                         </TableCell>
                     </TableRow>
                     {vatTotal !== totalFee && (
@@ -67,8 +68,8 @@ const ViewTable = ({ tableItems, vat, discount }) => {
                                 {' '}
                             </TableCell>
                             <TableCell className="capitalize text-base" align="center">
-                                <span className="font-bold">With {discount}% Discount : </span>
-                                {totalFee} <TakaSign />
+                                <span className="font-semibold">With {discount}% Discount : </span>
+                                <span className="font-bold">{totalFee}</span> <TakaSign />
                             </TableCell>
                         </TableRow>
                     )}
@@ -78,7 +79,7 @@ const ViewTable = ({ tableItems, vat, discount }) => {
                         </TableCell>
                         <TableCell className="capitalize text-base" align="center">
                             <span className="font-bold">Total : </span>
-                            {totalFee} <TakaSign />
+                            <span className="font-bold">{totalFee}</span> <TakaSign />
                         </TableCell>
                     </TableRow>
                 </TableBody>

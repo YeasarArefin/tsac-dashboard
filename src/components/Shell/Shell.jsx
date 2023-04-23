@@ -142,7 +142,7 @@ function Shell(props) {
                     width: { sm: `calc(100% - ${drawerWidth}px)` },
                     ml: { sm: `${drawerWidth}px` },
                 }}
-                className="bg-white shadow-lg"
+                className="bg-white shadow-lg print:hidden"
             >
                 <Toolbar className="justify-between sm:justify-end">
                     <IconButton
