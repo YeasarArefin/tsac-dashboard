@@ -62,15 +62,17 @@ const EditPage = ({
                     <h1 className="font-semibold text-xl text-right">
                         {new Date().toLocaleDateString()}
                     </h1>
-                    <button
-                        type="button"
-                        className="flex items-center justify-center gap-x-1 p-2 text-blue-600 border border-blue-600 rounded-lg "
-                        onClick={() => {
-                            setPreview(true);
-                        }}
-                    >
-                        <AiOutlineEye /> Preview
-                    </button>
+                    {currentUser?.email !== undefined ? (
+                        <button
+                            type="button"
+                            className="flex items-center justify-center gap-x-1 p-2 text-blue-600 border border-blue-600 rounded-lg "
+                            onClick={() => {
+                                setPreview(true);
+                            }}
+                        >
+                            <AiOutlineEye /> Preview
+                        </button>
+                    ) : null}
                 </div>
             </div>
 

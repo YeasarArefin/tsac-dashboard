@@ -1,9 +1,44 @@
+/* eslint-disable no-restricted-syntax */
 /* eslint-disable react/no-unescaped-entities */
+import axios from 'axios';
 import React from 'react';
-import { AiOutlineEdit, AiOutlinePrinter } from 'react-icons/ai';
+import { AiOutlineEdit, AiOutlinePrinter, AiOutlineSave } from 'react-icons/ai';
 import ViewTable from './ViewTable';
 
 const ViewPage = ({ setPreview, currentUser, tableItems, vat, discount }) => {
+    let subTotal = 0;
+    for (const item of tableItems) {
+        subTotal += Number(item.fee);
+    }
+    const vatTotal = subTotal + (subTotal * Number(vat)) / 100;
+    const totalFee = Math.floor(vatTotal - (vatTotal * Number(discount)) / 100);
+
+    const { name, phone, email, institute } = currentUser;
+    const userInvoice = {
+        name,
+        phone,
+        email,
+        institute,
+        fees: tableItems,
+        vat,
+        discount,
+        payment: totalFee,
+    };
+
+    const handleSaveInvoice = async () => {
+        try {
+            const { status } = await axios.post(
+                'http://localhost:5000/api/v1/invoice',
+                userInvoice
+            );
+            if (status === 200) {
+                console.log('🚀 ~ file: ViewPage.jsx:16 ~ handleSaveInvoice ~ status:', 'done');
+            }
+        } catch (error) {
+            console.log('🚀 ~ file: ViewPage.jsx:15 ~ handleSaveInvoice ~ error:', error);
+        }
+    };
+
     return (
         <div>
             <div className="p-3 md:p-10 print:-mt-[100px] flex flex-col gap-y-10 print:w-[595px] mx-auto">
@@ -33,12 +68,20 @@ const ViewPage = ({ setPreview, currentUser, tableItems, vat, discount }) => {
                                     <AiOutlineEdit /> Edit
                                 </button>
                                 <button
-                                    className="flex items-center justify-center gap-x-1 p-2 text-blue-600 border border-blue-600 rounded-lg"
+                                    className="flex items-center justify-center gap-x-1 p-2 text-red-600 border border-red-600 rounded-lg"
                                     type="button"
                                     onClick={() => window.print()}
                                 >
                                     <AiOutlinePrinter />
                                     Print
+                                </button>
+                                <button
+                                    className="flex items-center justify-center gap-x-1 p-2 text-blue-600 border border-blue-600 rounded-lg"
+                                    type="button"
+                                    onClick={handleSaveInvoice}
+                                >
+                                    <AiOutlineSave />
+                                    Save
                                 </button>
                             </div>
                         </div>
@@ -74,7 +117,15 @@ const ViewPage = ({ setPreview, currentUser, tableItems, vat, discount }) => {
                         </div>
                     </div>
 
-                    <ViewTable tableItems={tableItems} vat={vat} discount={discount} />
+                    <ViewTable
+                        tableItems={tableItems}
+                        vat={vat}
+                        discount={discount}
+                        currentUser={currentUser}
+                        subTotal={subTotal}
+                        totalFee={totalFee}
+                        vatTotal={vatTotal}
+                    />
                 </div>
             </div>
         </div>

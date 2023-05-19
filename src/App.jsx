@@ -4,7 +4,9 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Shell from './components/Shell/Shell';
 import Four0One from './pages/401';
 import Four0Four from './pages/404';
-import Invoice from './pages/invoice/index.jsx';
+import CreateInvoice from './pages/CreateInvoice';
+import Dashboard from './pages/Dashboard';
+import ListInvoice from './pages/ListInvoice';
 import Settings from './pages/Settings/Settings';
 import Signin from './pages/Signin/Signin';
 import StudentsList from './pages/Students/StudentsList';
@@ -31,7 +33,7 @@ const App = () => {
             children: [
                 {
                     path: '/',
-                    element: <h1>dashboard</h1>,
+                    element: <Dashboard />,
                 },
                 {
                     path: 'teachers',
@@ -54,14 +56,38 @@ const App = () => {
                         fetch('https://tsac.onrender.com/api/v1/accounts?role=student'),
                 },
                 {
-                    path: 'invoice',
+                    path: 'create-invoice',
                     element: (
                         <RolebasedAuth allowedRoles={[admin]}>
-                            <Invoice />
+                            <CreateInvoice />
                         </RolebasedAuth>
                     ),
-                    loader: async () =>
-                        fetch('https://tsac.onrender.com/api/v1/accounts?role=student'),
+                },
+                {
+                    path: 'create-expenditure',
+                    element: (
+                        <RolebasedAuth allowedRoles={[admin]}>
+                            <h1>create-expenditure</h1>
+                        </RolebasedAuth>
+                    ),
+                },
+                {
+                    path: 'list-invoice',
+                    element: (
+                        <RolebasedAuth allowedRoles={[admin]}>
+                            <ListInvoice />
+                        </RolebasedAuth>
+                    ),
+                    loader: async () => fetch('http://localhost:5000/api/v1/invoice'),
+                },
+                {
+                    path: 'list-expenditure',
+                    element: (
+                        <RolebasedAuth allowedRoles={[admin]}>
+                            <h1>list-expenditure</h1>
+                        </RolebasedAuth>
+                    ),
+                    loader: async () => fetch('http://localhost:5000/api/v1/invoice'),
                 },
                 {
                     path: 'settings',

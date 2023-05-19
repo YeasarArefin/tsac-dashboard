@@ -12,14 +12,7 @@ import {
 import React from 'react';
 import TakaSign from '../../UI/TakaSign';
 
-const ViewTable = ({ tableItems, vat, discount }) => {
-    console.log('🚀 ~ file: ViewTable.jsx:15 ~ ViewTable ~ vat:', vat);
-    let subTotal = 0;
-    for (const item of tableItems) {
-        subTotal += Number(item.fee);
-    }
-    const vatTotal = subTotal + (subTotal * Number(vat)) / 100;
-    const totalFee = vatTotal - (vatTotal * Number(discount)) / 100;
+const ViewTable = ({ tableItems, vat, discount, currentUser, subTotal, vatTotal, totalFee }) => {
     return (
         <TableContainer component={Paper} className="shadow-none" style={{ fontFamily: 'cursive' }}>
             <Table aria-label="simple table">
@@ -45,18 +38,14 @@ const ViewTable = ({ tableItems, vat, discount }) => {
                         </TableRow>
                     ))}
                     <TableRow>
-                        <TableCell className="capitalize text-base" align="center">
-                            {' '}
-                        </TableCell>
+                        <TableCell className="capitalize text-base" align="center" />
                         <TableCell className="capitalize text-base" align="center">
                             <span className="font-semibold">Subtotal : </span>
                             <span className="font-bold">{subTotal}</span> <TakaSign />
                         </TableCell>
                     </TableRow>
                     <TableRow>
-                        <TableCell className="capitalize text-base" align="center">
-                            {' '}
-                        </TableCell>
+                        <TableCell className="capitalize text-base" align="center" />
                         <TableCell className="capitalize text-base" align="center">
                             <span className="font-semibold">With {vat}% Vat : </span>
                             <span className="font-bold">{vatTotal}</span> <TakaSign />
@@ -64,9 +53,7 @@ const ViewTable = ({ tableItems, vat, discount }) => {
                     </TableRow>
                     {vatTotal !== totalFee && (
                         <TableRow>
-                            <TableCell className="capitalize text-base" align="center">
-                                {' '}
-                            </TableCell>
+                            <TableCell className="capitalize text-base" align="center" />
                             <TableCell className="capitalize text-base" align="center">
                                 <span className="font-semibold">With {discount}% Discount : </span>
                                 <span className="font-bold">{totalFee}</span> <TakaSign />
@@ -74,9 +61,7 @@ const ViewTable = ({ tableItems, vat, discount }) => {
                         </TableRow>
                     )}
                     <TableRow>
-                        <TableCell className="capitalize text-base" align="center">
-                            {' '}
-                        </TableCell>
+                        <TableCell className="capitalize text-base" align="center" />
                         <TableCell className="capitalize text-base" align="center">
                             <span className="font-bold">Total : </span>
                             <span className="font-bold">{totalFee}</span> <TakaSign />

@@ -10,6 +10,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import PropTypes from 'prop-types';
 import * as React from 'react';
+import { AiOutlinePlus } from 'react-icons/ai';
 import { FaChalkboardTeacher } from 'react-icons/fa';
 import { HiOutlineUserGroup } from 'react-icons/hi';
 import { RiDashboardLine, RiSettings5Line } from 'react-icons/ri';
@@ -18,7 +19,7 @@ import { NavLink, Outlet } from 'react-router-dom';
 import useAuth from '../../utils/hooks/useAuth';
 import Dropdown from '../UI/Dropdown';
 
-const drawerWidth = 240;
+const drawerWidth = 270;
 
 function Shell(props) {
     const { window } = props;
@@ -84,9 +85,24 @@ function Shell(props) {
             path: '/students',
         },
         {
-            name: 'invoice',
+            name: 'create invoice',
+            icon: <AiOutlinePlus />,
+            path: '/create-invoice',
+        },
+        {
+            name: 'create expenditure',
+            icon: <AiOutlinePlus />,
+            path: '/create-expenditure',
+        },
+        {
+            name: 'invoice list',
             icon: <TbFileInvoice />,
-            path: '/invoice',
+            path: '/list-invoice',
+        },
+        {
+            name: 'expenditure list',
+            icon: <TbFileInvoice />,
+            path: '/list-expenditure',
         },
         {
             name: 'settings',
