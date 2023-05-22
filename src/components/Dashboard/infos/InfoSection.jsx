@@ -7,7 +7,7 @@ import { getFetcher } from '../../../utils/functions/fetcher';
 import InfoCard from './InfoCard';
 
 export default function InfoSection() {
-    const { data } = useSWR('http://localhost:5000/api/v1/dashboard', getFetcher);
+    const { data } = useSWR('https://tsac.onrender.com/api/v1/dashboard', getFetcher);
     console.log('🚀 ~ file: InfoSection.jsx:7 ~ InfoSection ~ data:', data);
     return (
         <section>

@@ -15,7 +15,10 @@ export default function CreateExpenditureSection() {
         initialValues,
         validationSchema: ExpenditureSchema,
         onSubmit: async (value, action) => {
-            const { status } = await axios.post('http://localhost:5000/api/v1/expenditure', value);
+            const { status } = await axios.post(
+                'https://tsac.onrender.com/api/v1/expenditure',
+                value
+            );
             if (status === 200) {
                 alert('Success');
                 action.resetForm();

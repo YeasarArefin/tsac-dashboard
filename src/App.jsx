@@ -89,7 +89,7 @@ const App = () => {
                             <ListExpenditure />
                         </RolebasedAuth>
                     ),
-                    loader: async () => fetch('http://localhost:5000/api/v1/expenditure'),
+                    loader: async () => fetch('https://tsac.onrender.com/api/v1/expenditure'),
                 },
                 {
                     path: 'settings',
