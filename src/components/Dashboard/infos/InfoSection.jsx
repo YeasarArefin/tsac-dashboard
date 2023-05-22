@@ -11,9 +11,12 @@ export default function InfoSection() {
     console.log('🚀 ~ file: InfoSection.jsx:7 ~ InfoSection ~ data:', data);
     return (
         <section>
-            <div className="grid grid-cols-4 gap-x-5">
+            <div className="grid md:grid-cols-1 lg:grid-cols-3 gap-5 mb-7">
                 <InfoCard data={data?.income} name="Income" icon={<TbCurrencyTaka />} />
-                {/* <InfoCard data={data?.income} name="Expenditure" icon={<TbCurrencyTaka />} /> */}
+                <InfoCard data={data?.expenditure} name="Expenditure" icon={<TbCurrencyTaka />} />
+                <InfoCard data={data?.net} name="Net Income" icon={<TbCurrencyTaka />} />
+            </div>
+            <div className="grid grid-cols-2 gap-5">
                 <InfoCard data={data?.teachers} name="Teachers" icon={<FaChalkboardTeacher />} />
                 <InfoCard data={data?.students} name="Students" icon={<BsPeople />} />
             </div>

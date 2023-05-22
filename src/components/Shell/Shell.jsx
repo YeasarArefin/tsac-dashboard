@@ -90,14 +90,14 @@ function Shell(props) {
             path: '/create-invoice',
         },
         {
-            name: 'create expenditure',
-            icon: <AiOutlinePlus />,
-            path: '/create-expenditure',
-        },
-        {
             name: 'invoice list',
             icon: <TbFileInvoice />,
             path: '/list-invoice',
+        },
+        {
+            name: 'create expenditure',
+            icon: <AiOutlinePlus />,
+            path: '/create-expenditure',
         },
         {
             name: 'expenditure list',

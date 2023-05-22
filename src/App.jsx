@@ -4,8 +4,10 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Shell from './components/Shell/Shell';
 import Four0One from './pages/401';
 import Four0Four from './pages/404';
+import CreateExpenditure from './pages/CreateExpenditure';
 import CreateInvoice from './pages/CreateInvoice';
 import Dashboard from './pages/Dashboard';
+import ListExpenditure from './pages/ListExpenditure';
 import ListInvoice from './pages/ListInvoice';
 import Settings from './pages/Settings/Settings';
 import Signin from './pages/Signin/Signin';
@@ -67,7 +69,7 @@ const App = () => {
                     path: 'create-expenditure',
                     element: (
                         <RolebasedAuth allowedRoles={[admin]}>
-                            <h1>create-expenditure</h1>
+                            <CreateExpenditure />
                         </RolebasedAuth>
                     ),
                 },
@@ -78,16 +80,16 @@ const App = () => {
                             <ListInvoice />
                         </RolebasedAuth>
                     ),
-                    loader: async () => fetch('http://localhost:5000/api/v1/invoice'),
+                    loader: async () => fetch('https://tsac.onrender.com/api/v1/invoice'),
                 },
                 {
                     path: 'list-expenditure',
                     element: (
                         <RolebasedAuth allowedRoles={[admin]}>
-                            <h1>list-expenditure</h1>
+                            <ListExpenditure />
                         </RolebasedAuth>
                     ),
-                    loader: async () => fetch('http://localhost:5000/api/v1/invoice'),
+                    loader: async () => fetch('http://localhost:5000/api/v1/expenditure'),
                 },
                 {
                     path: 'settings',

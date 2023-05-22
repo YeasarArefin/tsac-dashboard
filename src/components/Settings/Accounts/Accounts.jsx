@@ -129,14 +129,12 @@ const Accounts = () => {
                                 progress: undefined,
                                 theme: 'light',
                             });
-                            // action.resetForm();
+                            action.resetForm();
                             setSaveLoading(false);
                             setStudentStandard('');
                         }
                     })
                     .catch((err) => setPostError(err));
-                // axios.post('https://tsac.onrender.com/api/v1/createaccount', value);
-                // console.log('🚀 ~ file: Accounts.jsx:72 ~ Accounts ~ value:', value);
             },
         });
 

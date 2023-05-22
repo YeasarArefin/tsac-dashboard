@@ -28,7 +28,7 @@ const ViewPage = ({ setPreview, currentUser, tableItems, vat, discount }) => {
     const handleSaveInvoice = async () => {
         try {
             const { status } = await axios.post(
-                'http://localhost:5000/api/v1/invoice',
+                'https://tsac.onrender.com/api/v1/invoice',
                 userInvoice
             );
             if (status === 200) {
