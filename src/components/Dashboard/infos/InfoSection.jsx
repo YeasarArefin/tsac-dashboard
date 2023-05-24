@@ -4,8 +4,7 @@ import { FaChalkboardTeacher } from 'react-icons/fa';
 import { TbCurrencyTaka } from 'react-icons/tb';
 import useSWR from 'swr';
 import { getFetcher } from '../../../utils/functions/fetcher';
-import MonthlyChart from '../charts/MonthlyChart';
-import YearlyChart from '../charts/YearlyChart';
+import BarChart from '../charts/BarChart';
 import InfoCard from './InfoCard';
 
 export default function InfoSection() {
@@ -22,8 +21,9 @@ export default function InfoSection() {
                 <InfoCard data={data?.students} name="Students" icon={<BsPeople />} />
             </div>
             <div className="mt-10 grid gap-5 grid-cols-1 lg:grid-cols-2">
-                <MonthlyChart chartData={data?.monthlyChart} title="Monthly" />
-                <YearlyChart chartData={data?.yearlyChart} title="Yearly" />
+                <BarChart chartData={data?.monthlyChart} title="Monthly" type="month" />
+                <BarChart chartData={data?.yearlyChart} title="Yearly" type="year" />
+                {/* <YearlyChart chartData={data?.yearlyChart} title="Yearly" /> */}
             </div>
         </section>
     );

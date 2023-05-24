@@ -5,9 +5,9 @@ import React from 'react';
 import { Bar } from 'react-chartjs-2';
 
 Chart.register(CategoryScale);
-export default function MonthlyChart({ chartData, title }) {
+export default function BarChart({ chartData, title, type }) {
     const chart = {
-        labels: chartData?.map((entry) => entry.month),
+        labels: chartData?.map((entry) => entry[type]),
         datasets: [
             {
                 label: 'Income',
