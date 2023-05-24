@@ -6,8 +6,7 @@ import { styled } from '@mui/material/styles';
 import { DataGrid } from '@mui/x-data-grid';
 import moment from 'moment';
 import * as React from 'react';
-import { FaRegEdit } from 'react-icons/fa';
-import { RxCross2 } from 'react-icons/rx';
+import { BsPrinter } from 'react-icons/bs';
 import { Link, useLoaderData } from 'react-router-dom';
 import FeesDialog from '../../components/UI/FeesDialog';
 
@@ -65,26 +64,39 @@ const userCol = [
         width: 200,
         renderCell: (params) => <h1>{moment(params.row.createdAt).format('Do MMM YY')}</h1>,
     },
-
     {
-        field: 'action',
+        field: 'Action',
         headerName: 'Action',
         width: 100,
-        renderCell: (params) => {
-            return (
-                <div className="flex items-center justify-center gap-x-5">
-                    <Link to={params.row._id}>
-                        <div className="p-2 rounded-full border hover:bg-[#3d5ee1] text-md hover:text-white hover:border-white">
-                            <FaRegEdit />
-                        </div>
-                    </Link>
-                    <div className="p-2 rounded-full bg-red-500 hover:bg-red-600 text-md text-white cursor-pointer">
-                        <RxCross2 />
-                    </div>
-                </div>
-            );
-        },
+        renderCell: (params) => (
+            <Link
+                className="p-2 border rounded-full bg-blue-600 hover:bg-blue-500 duration-200 text-white text-lg"
+                to={`/print-invoice/${params.row._id}`}
+            >
+                <BsPrinter />
+            </Link>
+        ),
     },
+
+    // {
+    //     field: 'action',
+    //     headerName: 'Action',
+    //     width: 100,
+    //     renderCell: (params) => {
+    //         return (
+    //             <div className="flex items-center justify-center gap-x-5">
+    //                 <Link to={params.row._id}>
+    //                     <div className="p-2 rounded-full border hover:bg-[#3d5ee1] text-md hover:text-white hover:border-white">
+    //                         <FaRegEdit />
+    //                     </div>
+    //                 </Link>
+    //                 <div className="p-2 rounded-full bg-red-500 hover:bg-red-600 text-md text-white cursor-pointer">
+    //                     <RxCross2 />
+    //                 </div>
+    //             </div>
+    //         );
+    //     },
+    // },
 ];
 
 export default function ListInvoice() {
@@ -116,7 +128,9 @@ export default function ListInvoice() {
                         size="small"
                         onChange={handleSearch}
                     />
-                    <Button variant="outlined">Add</Button>
+                    <Link to="/create-invoice">
+                        <Button variant="outlined">Add</Button>
+                    </Link>
                 </div>
             </div>
 

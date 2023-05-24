@@ -9,6 +9,7 @@ import CreateInvoice from './pages/CreateInvoice';
 import Dashboard from './pages/Dashboard';
 import ListExpenditure from './pages/ListExpenditure';
 import ListInvoice from './pages/ListInvoice';
+import PrintInvoice from './pages/PrintInvoice';
 import Settings from './pages/Settings/Settings';
 import Signin from './pages/Signin/Signin';
 import StudentsList from './pages/Students/StudentsList';
@@ -81,6 +82,14 @@ const App = () => {
                         </RolebasedAuth>
                     ),
                     loader: async () => fetch('https://tsac.onrender.com/api/v1/invoice'),
+                },
+                {
+                    path: 'print-invoice/:id',
+                    element: (
+                        <RolebasedAuth allowedRoles={[admin]}>
+                            <PrintInvoice />
+                        </RolebasedAuth>
+                    ),
                 },
                 {
                     path: 'list-expenditure',

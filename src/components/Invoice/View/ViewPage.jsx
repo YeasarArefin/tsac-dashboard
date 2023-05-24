@@ -23,6 +23,8 @@ const ViewPage = ({ setPreview, currentUser, tableItems, vat, discount }) => {
         vat,
         discount,
         payment: totalFee,
+        vatTotal,
+        subTotal,
     };
 
     const handleSaveInvoice = async () => {
