@@ -3,6 +3,7 @@
 import axios from 'axios';
 import React from 'react';
 import { AiOutlineEdit, AiOutlinePrinter, AiOutlineSave } from 'react-icons/ai';
+import { ToastContainer, toast } from 'react-toastify';
 import ViewTable from './ViewTable';
 
 const ViewPage = ({ setPreview, currentUser, tableItems, vat, discount }) => {
@@ -31,10 +32,20 @@ const ViewPage = ({ setPreview, currentUser, tableItems, vat, discount }) => {
         try {
             const { status } = await axios.post(
                 'https://tsac.onrender.com/api/v1/invoice',
-                userInvoice
+                userInvoice,
+                { headers: { authorization: `Bearer ${localStorage.getItem('token')}` } }
             );
             if (status === 200) {
-                console.log('🚀 ~ file: ViewPage.jsx:16 ~ handleSaveInvoice ~ status:', 'done');
+                toast.success('Invoice Created Successfully', {
+                    position: 'bottom-right',
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: 'light',
+                });
             }
         } catch (error) {
             console.log('🚀 ~ file: ViewPage.jsx:15 ~ handleSaveInvoice ~ error:', error);
@@ -43,6 +54,18 @@ const ViewPage = ({ setPreview, currentUser, tableItems, vat, discount }) => {
 
     return (
         <div>
+            <ToastContainer
+                position="bottom-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />
             <div className="p-3 md:p-10 print:-mt-[100px] flex flex-col gap-y-10 print:w-[595px] mx-auto">
                 <div>
                     <div className="flex justify-between">
@@ -114,8 +137,8 @@ const ViewPage = ({ setPreview, currentUser, tableItems, vat, discount }) => {
                         <div className="text-end">
                             <h1 className="text-2xl font-extrabold">Invoice from</h1>
                             <h1>Tanveer's Science Academic Coaching</h1>
-                            <h1>Contact : 0187777777</h1>
-                            <h1>Address : satarkul, in branch</h1>
+                            <h1>Contact : 01303-451671</h1>
+                            <h1>Address : Uttar Badda, in branch</h1>
                         </div>
                     </div>
 
@@ -128,6 +151,13 @@ const ViewPage = ({ setPreview, currentUser, tableItems, vat, discount }) => {
                         totalFee={totalFee}
                         vatTotal={vatTotal}
                     />
+
+                    <div className="flex flex-col items-end mt-10">
+                        <h1 className="border-b-2 sign_font font-semibold text-3xl">
+                            Tanveer Ahmed
+                        </h1>
+                        <h1>Signature</h1>
+                    </div>
                 </div>
             </div>
         </div>

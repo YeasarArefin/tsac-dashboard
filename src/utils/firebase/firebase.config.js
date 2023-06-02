@@ -1,9 +1,9 @@
 const firebaseConfig = {
-    apiKey: 'AIzaSyALHg-qxLkUMG_fw8pKMDqRDVNQZY1M740',
-    authDomain: 'medical-site-d0938.firebaseapp.com',
-    projectId: 'medical-site-d0938',
-    storageBucket: 'medical-site-d0938.appspot.com',
-    messagingSenderId: '456829151263',
-    appId: '1:456829151263:web:50f37cafd2a87716364d2a',
+    apiKey: import.meta.env.VITE_APIKEY,
+    authDomain: import.meta.env.VITE_AUTHDOMAIN,
+    projectId: import.meta.env.VITE_PROJECTID,
+    storageBucket: import.meta.env.VITE_STORAGEBUCKET,
+    messagingSenderId: import.meta.env.VITE_MESSAGINGSENDERID,
+    appId: import.meta.VITE_APPID,
 };
 export default firebaseConfig;

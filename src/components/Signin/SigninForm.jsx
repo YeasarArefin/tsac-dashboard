@@ -18,8 +18,8 @@ const SigninForm = () => {
     const navigate = useNavigate();
     const { values, handleChange, handleBlur, handleSubmit, errors, touched } = useFormik({
         initialValues: {
-            email: '',
-            password: '',
+            email: 'admin@tsac.com',
+            password: '123456',
         },
         validationSchema: SigninSchema,
         onSubmit: (value) => {
@@ -62,6 +62,7 @@ const SigninForm = () => {
                     }
                     type="email"
                     placeholder="Email"
+                    autoComplete="off"
                 />
                 {errors.email && touched.email && (
                     <p className="text-red-500 pt-1 pl-2">* {errors.email}</p>
@@ -87,6 +88,7 @@ const SigninForm = () => {
                     }
                     type={eyeIsClosed ? 'password' : 'text'}
                     placeholder="Password"
+                    autoComplete="off"
                 />
                 <div
                     onClick={() => setEyeIsColosed(!eyeIsClosed)}

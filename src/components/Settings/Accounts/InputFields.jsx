@@ -27,6 +27,7 @@ const InputFields = ({ values, handleChange, handleBlur, errors, touched }) => {
                     className={inputStyle}
                     type="text"
                     placeholder="Name"
+                    autoComplete="off"
                 />
                 {errors.name && touched.name && (
                     <p className="text-red-500 pt-1 pl-2">* {errors.name}</p>
@@ -42,6 +43,7 @@ const InputFields = ({ values, handleChange, handleBlur, errors, touched }) => {
                     className={inputStyle}
                     type="text"
                     placeholder="Phone"
+                    autoComplete="off"
                 />
                 {errors.phone && touched.phone && (
                     <p className="text-red-500 pt-1 pl-2">* {errors.phone}</p>
@@ -57,6 +59,7 @@ const InputFields = ({ values, handleChange, handleBlur, errors, touched }) => {
                     className={inputStyle}
                     type="email"
                     placeholder="Email"
+                    autoComplete="off"
                 />
                 {errors.email && touched.email && (
                     <p className="text-red-500 pt-1 pl-2">* {errors.email}</p>
@@ -72,6 +75,7 @@ const InputFields = ({ values, handleChange, handleBlur, errors, touched }) => {
                     className={inputStyle}
                     type="text"
                     placeholder="Institute"
+                    autoComplete="off"
                 />
                 {errors.institute && touched.institute && (
                     <p className="text-red-500 pt-1 pl-2">* {errors.institute}</p>
@@ -87,6 +91,7 @@ const InputFields = ({ values, handleChange, handleBlur, errors, touched }) => {
                     className={inputStyle}
                     type={eyeIsClosed ? 'password' : 'text'}
                     placeholder="Password"
+                    autoComplete="off"
                 />
                 <div
                     onClick={() => setEyeIsClosed(!eyeIsClosed)}

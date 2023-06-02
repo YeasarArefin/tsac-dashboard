@@ -41,22 +41,26 @@ const App = () => {
                 {
                     path: 'teachers',
                     element: (
-                        <RolebasedAuth allowedRoles={[admin, teacher]}>
+                        <RolebasedAuth allowedRoles={[admin, teacher, student]}>
                             <TeachersList />
                         </RolebasedAuth>
                     ),
                     loader: async () =>
-                        fetch('https://tsac.onrender.com/api/v1/accounts?role=teacher'),
+                        fetch('https://tsac.onrender.com/api/v1/accounts?role=teacher', {
+                            headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+                        }),
                 },
                 {
                     path: 'students',
                     element: (
-                        <RolebasedAuth allowedRoles={[admin, teacher]}>
+                        <RolebasedAuth allowedRoles={[admin, teacher, student]}>
                             <StudentsList />
                         </RolebasedAuth>
                     ),
                     loader: async () =>
-                        fetch('https://tsac.onrender.com/api/v1/accounts?role=student'),
+                        fetch('https://tsac.onrender.com/api/v1/accounts?role=student', {
+                            headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+                        }),
                 },
                 {
                     path: 'create-invoice',
@@ -81,7 +85,10 @@ const App = () => {
                             <ListInvoice />
                         </RolebasedAuth>
                     ),
-                    loader: async () => fetch('https://tsac.onrender.com/api/v1/invoice'),
+                    loader: async () =>
+                        fetch('https://tsac.onrender.com/api/v1/invoice', {
+                            headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+                        }),
                 },
                 {
                     path: 'print-invoice/:id',
@@ -98,7 +105,10 @@ const App = () => {
                             <ListExpenditure />
                         </RolebasedAuth>
                     ),
-                    loader: async () => fetch('https://tsac.onrender.com/api/v1/expenditure'),
+                    loader: async () =>
+                        fetch('https://tsac.onrender.com/api/v1/expenditure', {
+                            headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+                        }),
                 },
                 {
                     path: 'settings',

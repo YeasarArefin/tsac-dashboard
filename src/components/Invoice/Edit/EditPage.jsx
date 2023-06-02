@@ -109,8 +109,8 @@ const EditPage = ({
                 <div className="text-end">
                     <h1 className="text-2xl font-extrabold">Invoice from</h1>
                     <h1>Tanveer's Science Academic Coaching</h1>
-                    <h1>Contact : 0187777777</h1>
-                    <h1>Address : Satarkul, in branch</h1>
+                    <h1>Contact : 01303-451671</h1>
+                    <h1>Address : Uttar Badda, in branch</h1>
                 </div>
             </div>
 
@@ -120,7 +120,7 @@ const EditPage = ({
                 handleAdd={handleAdd}
                 handleDelete={handleDelete}
             />
-            <div className="flex gap-5">
+            <div className="flex flex-wrap gap-5">
                 <div className="flex items-center gap-x-2">
                     <div className="font-bold">VAT % :</div>
                     <div className="flex flex-col relative">

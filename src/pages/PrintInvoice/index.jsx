@@ -15,7 +15,8 @@ export default function PrintInvoice() {
     useEffect(() => {
         const getInvoiceByID = async () => {
             const { data, status } = await axios.get(
-                `https://tsac.onrender.com/api/v1/invoice?id=${_id}`
+                `https://tsac.onrender.com/api/v1/invoice?id=${_id}`,
+                { headers: { authorization: `Bearer ${localStorage.getItem('token')}` } }
             );
             if (status === 200) {
                 setInvoice(data[0]);
@@ -82,8 +83,8 @@ export default function PrintInvoice() {
                             <div className="text-end">
                                 <h1 className="text-2xl font-extrabold">Invoice from</h1>
                                 <h1>Tanveer's Science Academic Coaching</h1>
-                                <h1>Contact : 0187777777</h1>
-                                <h1>Address : satarkul, in branch</h1>
+                                <h1>Contact : 01303-451671</h1>
+                                <h1>Address : Uttar Badda, in branch</h1>
                             </div>
                         </div>
 
@@ -95,6 +96,12 @@ export default function PrintInvoice() {
                             vatTotal={invoice?.vatTotal}
                             subTotal={invoice?.subTotal}
                         />
+                        <div className="flex flex-col items-end mt-10">
+                            <h1 className="border-b-2 sign_font font-semibold text-3xl">
+                                Tanveer Ahmed
+                            </h1>
+                            <h1>Signature</h1>
+                        </div>
                     </div>
                 </div>
             </div>

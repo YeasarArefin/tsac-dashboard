@@ -116,7 +116,9 @@ const Accounts = () => {
             onSubmit: (value, action) => {
                 setSaveLoading(true);
                 axios
-                    .post('https://tsac.onrender.com/api/v1/createaccount', value)
+                    .post('https://tsac.onrender.com/api/v1/createaccount', value, {
+                        headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+                    })
                     .then((res) => {
                         if (res.status === 200) {
                             toast.success('Account Created Successfully', {

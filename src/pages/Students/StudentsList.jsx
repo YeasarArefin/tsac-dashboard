@@ -4,15 +4,16 @@ import { Button, TextField } from '@mui/material';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import { DataGrid } from '@mui/x-data-grid';
+import axios from 'axios';
 import * as React from 'react';
-import { FaRegEdit } from 'react-icons/fa';
 import { RxCross2 } from 'react-icons/rx';
-import { Link, useLoaderData } from 'react-router-dom';
+import { useLoaderData } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const SearchInput = styled(TextField)(({ theme }) => ({
     border: 'solid 10px orange',
 }));
-
+let deleteAccountById;
 const userCol = [
     { field: 'id', headerName: 'ID', width: 250, valueGetter: (params) => `${params.row._id}` },
     {
@@ -43,14 +44,18 @@ const userCol = [
         renderCell: (params) => {
             return (
                 <div className="flex items-center justify-center gap-x-5">
-                    <Link to={params.row._id}>
+                    {/* <Link to={params.row._id}>
                         <div className="p-2 rounded-full border hover:bg-[#3d5ee1] text-md hover:text-white hover:border-white">
                             <FaRegEdit />
                         </div>
-                    </Link>
-                    <div className="p-2 rounded-full bg-red-500 hover:bg-red-600 text-md text-white cursor-pointer">
+                    </Link> */}
+                    <button
+                        type="button"
+                        onClick={() => deleteAccountById(params.row._id)}
+                        className="p-2 rounded-full bg-red-500 hover:bg-red-600 text-md text-white cursor-pointer"
+                    >
                         <RxCross2 />
-                    </div>
+                    </button>
                 </div>
             );
         },
@@ -68,6 +73,34 @@ export default function StudentsList() {
         );
         setDisplayUsers(matchedUser);
         console.log('🚀 ~ file: TeachersList.jsx:88 ~ handleSearch ~ matchedUser:', matchedUser);
+    };
+
+    deleteAccountById = (_id) => {
+        const data = { _id };
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios
+                    .delete('https://tsac.onrender.com/api/v1/createaccount', {
+                        data,
+                        headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+                    })
+                    .then(({ status }) => {
+                        if (status === 200) {
+                            Swal.fire('Deleted!', 'The Account has been deleted.', 'success');
+                            const remaining = displayUsers?.filter((user) => user._id !== _id);
+                            setDisplayUsers(remaining);
+                        }
+                    });
+            }
+        });
     };
 
     return (

@@ -1,9 +1,11 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import axios from 'axios';
 import {
+    browserSessionPersistence,
     createUserWithEmailAndPassword,
     getAuth,
     onAuthStateChanged,
+    setPersistence,
     signInWithEmailAndPassword,
     signOut,
 } from 'firebase/auth';
@@ -16,19 +18,35 @@ firebaseInit();
 const useFirebase = () => {
     const [user, setUser] = useState({});
     const [firebaseError, setFirebaseError] = useState('');
-    const [isLoading, setisLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(true);
     const [userInfo, setUserInfo] = useState({});
     const auth = getAuth();
 
+    // account sign out function
+    const signOutAccount = () => {
+        setIsLoading(true);
+        signOut(auth)
+            .then(() => {
+                setUser({});
+                localStorage.removeItem('token');
+            })
+            .catch((error) => {
+                setFirebaseError(error.message);
+            })
+            .finally(() => setIsLoading(false));
+    };
+
+    // getting user important information
     const getUserInfo = async (currentUser, navigate) => {
-        const { data } = await axios.get(
-            `https://tsac.onrender.com/api/v1/accounts?email=${currentUser?.email}`
+        const { data, status } = await axios.get(
+            `https://tsac.onrender.com/api/v1/accounts?email=${currentUser?.email}`,
+            { headers: { authorization: `Bearer ${localStorage.getItem('token')}` } }
         );
         setUserInfo(data?.[0]);
-        setisLoading(false);
+        setIsLoading(false);
         const userRole = data?.[0]?.role;
         if (userRole === 'admin') {
-            navigate('/settings');
+            navigate('/');
         } else if (userRole === 'teacher') {
             navigate('/teachers');
         } else if (userRole === 'student') {
@@ -65,12 +83,19 @@ const useFirebase = () => {
             });
     };
 
+    // account sing in function
     const signinAccount = (email, password, navigate) => {
-        setisLoading(true);
+        setIsLoading(true);
         signInWithEmailAndPassword(auth, email, password)
             .then(({ user }) => {
-                setUser(user);
-                getUserInfo(user, navigate);
+                axios
+                    .post('https://tsac.onrender.com/api/v1/jwt', { email: user.email })
+                    .then(({ data }) => {
+                        const { token } = data;
+                        localStorage.setItem('token', token);
+                        setUser(user);
+                        getUserInfo(user, navigate);
+                    });
             })
             .catch((error) => {
                 if (error.message === 'Firebase: Error (auth/wrong-password).') {
@@ -81,33 +106,22 @@ const useFirebase = () => {
                     setFirebaseError(error.message);
                 }
             })
-            .finally(() => setisLoading(false));
+            .finally(() => setIsLoading(false));
     };
 
-    const signOutAccount = () => {
-        setisLoading(true);
-        signOut(auth)
-            .then(() => {
-                setUser({});
-            })
-            .catch((error) => {
-                setFirebaseError(error.message);
-            })
-            .finally(() => setisLoading(false));
-    };
-
+    // checking auth state
     useEffect(() => {
-        setisLoading(true);
+        setIsLoading(true);
         const subscribed = onAuthStateChanged(auth, (user) => {
             if (user) {
                 setUser(user);
                 getUserInfo(user);
             } else {
                 setUser({});
-                setisLoading(false);
+                setIsLoading(false);
             }
         });
-
+        setPersistence(auth, browserSessionPersistence);
         return () => subscribed;
     }, [auth]);
 
