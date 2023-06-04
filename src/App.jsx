@@ -47,7 +47,9 @@ const App = () => {
                     ),
                     loader: async () =>
                         fetch('https://tsac.onrender.com/api/v1/accounts?role=teacher', {
-                            headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+                            headers: {
+                                authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                            },
                         }),
                 },
                 {
@@ -59,7 +61,9 @@ const App = () => {
                     ),
                     loader: async () =>
                         fetch('https://tsac.onrender.com/api/v1/accounts?role=student', {
-                            headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+                            headers: {
+                                authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                            },
                         }),
                 },
                 {
@@ -87,7 +91,9 @@ const App = () => {
                     ),
                     loader: async () =>
                         fetch('https://tsac.onrender.com/api/v1/invoice', {
-                            headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+                            headers: {
+                                authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                            },
                         }),
                 },
                 {
@@ -107,7 +113,9 @@ const App = () => {
                     ),
                     loader: async () =>
                         fetch('https://tsac.onrender.com/api/v1/expenditure', {
-                            headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+                            headers: {
+                                authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                            },
                         }),
                 },
                 {

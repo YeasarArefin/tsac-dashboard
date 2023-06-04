@@ -33,7 +33,7 @@ const ViewPage = ({ setPreview, currentUser, tableItems, vat, discount }) => {
             const { status } = await axios.post(
                 'https://tsac.onrender.com/api/v1/invoice',
                 userInvoice,
-                { headers: { authorization: `Bearer ${localStorage.getItem('token')}` } }
+                { headers: { authorization: `Bearer ${localStorage.getItem('accessToken')}` } }
             );
             if (status === 200) {
                 toast.success('Invoice Created Successfully', {

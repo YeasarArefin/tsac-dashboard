@@ -95,7 +95,7 @@ export default function ListInvoice() {
                 axios
                     .delete('https://tsac.onrender.com/api/v1/expenditure', {
                         data,
-                        headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+                        headers: { authorization: `Bearer ${localStorage.getItem('accessToken')}` },
                     })
                     .then(({ status }) => {
                         if (status === 200) {

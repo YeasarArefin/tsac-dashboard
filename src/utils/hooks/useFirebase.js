@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 import axios from 'axios';
 import {
@@ -28,7 +29,8 @@ const useFirebase = () => {
         signOut(auth)
             .then(() => {
                 setUser({});
-                localStorage.removeItem('token');
+                localStorage.removeItem('accessToken');
+                localStorage.removeItem('refreshToken');
             })
             .catch((error) => {
                 setFirebaseError(error.message);
@@ -37,10 +39,10 @@ const useFirebase = () => {
     };
 
     // getting user important information
-    const getUserInfo = async (currentUser, navigate) => {
+    /* const getUserInfo = async (currentUser, navigate) => {
         const { data, status } = await axios.get(
             `https://tsac.onrender.com/api/v1/accounts?email=${currentUser?.email}`,
-            { headers: { authorization: `Bearer ${localStorage.getItem('token')}` } }
+            { headers: { authorization: `Bearer ${localStorage.getItem('accessToken')}` } }
         );
         setUserInfo(data?.[0]);
         setIsLoading(false);
@@ -51,6 +53,75 @@ const useFirebase = () => {
             navigate('/teachers');
         } else if (userRole === 'student') {
             navigate('/');
+        }
+    }; */
+
+    const getUserInfo = async (currentUser, navigate) => {
+        try {
+            const accessToken = localStorage.getItem('accessToken');
+            const { data, status } = await axios.get(
+                `https://tsac.onrender.com/api/v1/accounts?email=${currentUser?.email}`,
+                { headers: { authorization: `Bearer ${accessToken}` } }
+            );
+            console.log('🚀 ~ file: useFirebase.js:62 ~ getUserInfo ~ status:', status);
+
+            setUserInfo(data?.[0]);
+            setIsLoading(false);
+            const userRole = data?.[0]?.role;
+
+            if (userRole === 'admin') {
+                navigate('/');
+            } else if (userRole === 'teacher') {
+                navigate('/teachers');
+            } else if (userRole === 'student') {
+                navigate('/');
+            }
+        } catch (error) {
+            // Check if the error indicates an expired access token
+            if (error.response && error.response.status === 401) {
+                try {
+                    // Call the refresh token endpoint to get a new access token
+                    const refreshToken = localStorage.getItem('refreshToken');
+                    const refreshResponse = await axios.post(
+                        'https://tsac.onrender.com/api/v1/jwt/refresh',
+                        { refreshToken }
+                    );
+
+                    if (refreshResponse.status === 200) {
+                        const { accessToken } = refreshResponse.data;
+
+                        // Update the access token in the localStorage
+                        localStorage.setItem('accessToken', accessToken);
+
+                        // Retry the original getUserInfo request with the new access token
+                        const newAccessToken = localStorage.getItem('accessToken');
+                        const { data, status } = await axios.get(
+                            `https://tsac.onrender.com/api/v1/accounts?email=${currentUser?.email}`,
+                            { headers: { authorization: `Bearer ${newAccessToken}` } }
+                        );
+                        console.log('🚀 ~ file: useFirebase.js:62 ~ getUserInfo ~ status:', status);
+
+                        setUserInfo(data?.[0]);
+                        setIsLoading(false);
+                        const userRole = data?.[0]?.role;
+
+                        if (userRole === 'admin') {
+                            navigate('/');
+                        } else if (userRole === 'teacher') {
+                            navigate('/teachers');
+                        } else if (userRole === 'student') {
+                            navigate('/');
+                        }
+                    }
+                } catch (error) {
+                    console.log('🚀 ~ file: useFirebase.js:123 ~ getUserInfo ~ error:', error);
+                    if (error.response.status === 401) {
+                        signOut(auth);
+                        localStorage.removeItem('accessToken');
+                        localStorage.removeItem('refreshToken');
+                    }
+                }
+            }
         }
     };
 
@@ -91,8 +162,9 @@ const useFirebase = () => {
                 axios
                     .post('https://tsac.onrender.com/api/v1/jwt', { email: user.email })
                     .then(({ data }) => {
-                        const { token } = data;
-                        localStorage.setItem('token', token);
+                        const { accessToken, refreshToken } = data;
+                        localStorage.setItem('accessToken', accessToken);
+                        localStorage.setItem('refreshToken', refreshToken);
                         setUser(user);
                         getUserInfo(user, navigate);
                     });
@@ -134,6 +206,8 @@ const useFirebase = () => {
         createAccount,
         signinAccount,
         signOutAccount,
+        signOut,
+        auth,
     };
 };
 export default useFirebase;

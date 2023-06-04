@@ -25,7 +25,7 @@ export default function CreateExpenditureSection() {
                 'https://tsac.onrender.com/api/v1/expenditure',
                 value,
                 {
-                    headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+                    headers: { authorization: `Bearer ${localStorage.getItem('accessToken')}` },
                 }
             );
             if (status === 200) {

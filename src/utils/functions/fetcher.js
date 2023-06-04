@@ -3,14 +3,14 @@ import axios from 'axios';
 
 export const getFetcher = async (...args) => {
     const { data } = await axios.get(...args, {
-        headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+        headers: { authorization: `Bearer ${localStorage.getItem('accessToken')}` },
     });
     return data;
 };
 
 export const postFetcher = async (...args) => {
     const { data } = await axios.post(...args, {
-        headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+        headers: { authorization: `Bearer ${localStorage.getItem('accessToken')}` },
     });
     return data;
 };

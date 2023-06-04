@@ -114,29 +114,34 @@ const Accounts = () => {
             validationSchema: AccountSchema,
 
             onSubmit: (value, action) => {
-                setSaveLoading(true);
-                axios
-                    .post('https://tsac.onrender.com/api/v1/createaccount', value, {
-                        headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
-                    })
-                    .then((res) => {
-                        if (res.status === 200) {
-                            toast.success('Account Created Successfully', {
-                                position: 'bottom-right',
-                                autoClose: 5000,
-                                hideProgressBar: false,
-                                closeOnClick: true,
-                                pauseOnHover: true,
-                                draggable: true,
-                                progress: undefined,
-                                theme: 'light',
-                            });
-                            action.resetForm();
-                            setSaveLoading(false);
-                            setStudentStandard('');
-                        }
-                    })
-                    .catch((err) => setPostError(err));
+                try {
+                    setSaveLoading(true);
+                    axios
+                        .post('https://tsac.onrender.com/api/v1/createaccount', value, {
+                            headers: {
+                                authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                            },
+                        })
+                        .then((res) => {
+                            if (res.status === 200) {
+                                toast.success('Account Created Successfully', {
+                                    position: 'bottom-right',
+                                    autoClose: 5000,
+                                    hideProgressBar: false,
+                                    closeOnClick: true,
+                                    pauseOnHover: true,
+                                    draggable: true,
+                                    progress: undefined,
+                                    theme: 'light',
+                                });
+                                action.resetForm();
+                                setSaveLoading(false);
+                                setStudentStandard('');
+                            }
+                        });
+                } catch (error) {
+                    console.log('🚀 ~ file: Accounts.jsx:143 ~ Accounts ~ error:', error);
+                }
             },
         });
 

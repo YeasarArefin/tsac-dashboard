@@ -86,7 +86,7 @@ export default function TeachersList() {
                 axios
                     .delete('https://tsac.onrender.com/api/v1/createaccount', {
                         data,
-                        headers: { authorization: `Bearer ${localStorage.getItem('token')}` },
+                        headers: { authorization: `Bearer ${localStorage.getItem('accessToken')}` },
                     })
                     .then(({ status }) => {
                         if (status === 200) {

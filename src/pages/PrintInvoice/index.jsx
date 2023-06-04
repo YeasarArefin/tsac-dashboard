@@ -16,7 +16,7 @@ export default function PrintInvoice() {
         const getInvoiceByID = async () => {
             const { data, status } = await axios.get(
                 `https://tsac.onrender.com/api/v1/invoice?id=${_id}`,
-                { headers: { authorization: `Bearer ${localStorage.getItem('token')}` } }
+                { headers: { authorization: `Bearer ${localStorage.getItem('accessToken')}` } }
             );
             if (status === 200) {
                 setInvoice(data[0]);
